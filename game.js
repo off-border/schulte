@@ -69,7 +69,6 @@ Shulte.prototype.start = function(){
             });
 
             cell.number = this.numbers[ this.size*row + col];
-
             cell.text = snap.text( x,y, cell.number );
             cell.text.attr({
                 x: x + cellWidth / 2,
@@ -81,29 +80,8 @@ Shulte.prototype.start = function(){
 
             });
 
-            function cellClicked(){
-                if( cell.number !== shulte.nextNumber )
-                    return;
-                cell.attr({
-                    fill: shulte.cellClickedColor
-                })
-                cell.animate({
-                    fill: shulte.cellBgColor
-                }, 500 );
-
-                shulte.nextNumber++;
-
-                if( shulte.nextNumber > shulte.size*shulte.size ){
-                    console.log('---DONE---')
-                }
-            }
-
-            cell.mousedown( cellClicked );
-            cell.text.mousedown( cellClicked );
-
-
-
-            //cell.append( cell.text );
+            cell.mousedown( this.cellClicked.bind(this,cell) );
+            cell.text.mousedown( this.cellClicked.bind(this,cell) );
 
             this.cells.push(cell);
 
@@ -111,4 +89,26 @@ Shulte.prototype.start = function(){
     }
 
 
+
+
+}
+
+Shulte.prototype.cellClicked = function( cell ){
+    if( cell.number !== this.nextNumber )
+        return;
+    cell.attr({
+        fill: this.cellClickedColor
+    })
+    cell.animate({
+        fill: this.cellBgColor
+    }, 500 );
+
+    this.nextNumber++;
+
+    if( this.nextNumber > this.size*this.size ){
+        console.log('---DONE---')
+        for( cell of this.cells ){
+            cell.text.attr( {text: ":)"} );
+        }
+    }
 }

@@ -7,11 +7,14 @@ content{
     margin: 20px auto;
 }
 
+
+
 .table{
-    border: 1px solid silver;
+    display:block;
+    border: 1px solid #d1d1d1;
     margin: auto;
     width: 400px;
-    height: 700px;
+    height: 400px;
 
     text-align: center;
 }
