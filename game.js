@@ -7,7 +7,7 @@ function Shulte(selector){
 
     this.snap = Snap(selector);
 
-    this.size = 5;
+    this.size = 3;
     this.cellPadding = 10;
     this.cellBorderWidth = 2;
     this.cellBorderColor = 'silver';
@@ -16,8 +16,14 @@ function Shulte(selector){
     this.cellClickedColor = '#9ef09e';
     this.cellFontColor = '#717171';
 
-
     this.cells = [];
+    this.nextNumber = 1;
+
+    this.snap.click(function(){
+        console.log('snapm mouseup');
+        if( this.nextNumber && this.nextNumber === -1 )
+            this.start();
+    }.bind(this) );
 
     window.snap = this.snap;
 
@@ -107,8 +113,14 @@ Shulte.prototype.cellClicked = function( cell ){
 
     if( this.nextNumber > this.size*this.size ){
         console.log('---DONE---')
-        for( cell of this.cells ){
-            cell.text.attr( {text: ":)"} );
-        }
+        this.smileCells();
+
+    }
+}
+
+Shulte.prototype.smileCells = function(){
+    for( let cell of this.cells ){
+        cell.text.attr( {text: ":)"} );
+        setTimeout( ()=> this.nextNumber = -1, 200 );
     }
 }
