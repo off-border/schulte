@@ -40,7 +40,7 @@ svg text::selection {
     float: right;
     position: absolute;
     top: 10%;
-    right: 2%;
+    right: 5%;
     width: 180px;
 /*    height: 400px;*/
     border: 3px solid silver;
