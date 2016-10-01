@@ -46,9 +46,9 @@
         </div>
 
         <div class="settings">
-            <input type="text" value="5">
+            <input type="text" id="cols" value="5" onchange="shulte.size = this.value; shulte.createCells(); shulte.smileCells();">
             <div class="timer">Time: 00</div>
-            <a class="start" href="javascript:;">start</a>
+            <a class="start" href="javascript:;" onclick="shulte.start();">start</a>
         </div>
 
 
@@ -59,7 +59,13 @@
     <script>
         var shulte = new Shulte('.table');
 
-        window.addEventListener('load', alignTable)
+        window.addEventListener('load', function(){
+
+            shulte.size = document.getElementById('cols').value;
+            shulte.createCells();
+            shulte.smileCells();
+            alignTable();
+        })
         window.addEventListener('resize', alignTable);
 
         function alignTable() {
