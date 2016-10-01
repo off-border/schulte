@@ -46,12 +46,13 @@
         </div>
 
         <div class="settings">
-            <input type="text" id="cols" value="5" onchange="shulte.size = this.value; shulte.createCells(); shulte.smileCells();">
+            <div id="size">2x2</div>
+            <input type="range" step="1" min="2" max="15" id="cols" value="5" oninput="updateSize()" onchange="shulte.createCells(); shulte.smileCells();">
             <a class="start" href="javascript:;" onclick="shulte.start();">start</a>
             <a class="stop hidden" href="javascript:;" onclick="shulte.stop();">stop</a>
             <div class="timer">Time: <span>00</span></div>
             <div class="next-number">Next: <span>00</span></div>
-<!--            <div class="next">Next: 1</div>-->
+            <!--            <div class="next">Next: 1</div>-->
         </div>
 
 
@@ -64,31 +65,32 @@
         var timerEl = document.querySelector('.timer span');
         var nextEl = document.querySelector('.next-number span');
 
-        shulte.timerTicked = function(time){
-            let f = Math.floor(time%1000/100);
-            let d = Math.floor(time/1000);
+        shulte.timerTicked = function (time) {
+            let f = Math.floor(time % 1000 / 100);
+            let d = Math.floor(time / 1000);
             timerEl.innerText = d + '.' + f;
         }
-        shulte.gameStarted = function(){
+        shulte.gameStarted = function () {
             nextEl.innerText = 1;
             document.querySelector('.start').classList.add('hidden');
             document.querySelector('.stop').classList.remove('hidden');
         }
-        shulte.gameStopped = function(){
+        shulte.gameStopped = function () {
             document.querySelector('.start').classList.remove('hidden');
             document.querySelector('.stop').classList.add('hidden');
         }
-        shulte.gameFinished = function(){
+        shulte.gameFinished = function () {
             shulte.gameStopped();
         }
 
-        shulte.cellClicked = function(number){
-            if( number < shulte.numbers.length )
-                nextEl.innerText = number+1;
+        shulte.cellClicked = function (number) {
+            if (number < shulte.numbers.length)
+                nextEl.innerText = number + 1;
         }
 
-        window.addEventListener('load', function(){
-            shulte.size = document.getElementById('cols').value;
+
+        window.addEventListener('load', function () {
+            updateSize();
             shulte.createCells();
             shulte.smileCells();
             alignTable();
@@ -99,26 +101,29 @@
             let tableEl = document.querySelector('.table');
             let settingsEl = document.querySelector('.settings');
             let settingsRect = settingsEl.getBoundingClientRect();
-            let winWidth =  window.innerWidth;
+            let winWidth = window.innerWidth;
             let winHeight = window.innerHeight;
 
             tableWidth = Math.min(winWidth, winHeight) -
                 tableEl.getBoundingClientRect().y * 2;
 
-            if( winWidth/2 + tableWidth/2 > settingsRect.left ){
+            if (winWidth / 2 + tableWidth / 2 > settingsRect.left) {
                 tableEl.parentElement.style.width = settingsRect.left + 'px';
-                if( tableWidth > settingsRect.left - tableEl.getBoundingClientRect().y * 2 )
+                if (tableWidth > settingsRect.left - tableEl.getBoundingClientRect().y * 2)
                     tableWidth = settingsRect.left - tableEl.getBoundingClientRect().y * 2;
-            }
-            else
+            } else
                 tableEl.parentElement.style.width = '';
 
             tableEl.style.width = tableWidth + 'px';
             tableEl.style.height = tableWidth + 'px';
-            settingsEl.style.top = winHeight/2 - settingsRect.height / 2 + 'px';
+            settingsEl.style.top = winHeight / 2 - settingsRect.height / 2 + 'px';
             shulte.alignCells();
         }
 
-
+        function updateSize(){
+            var size = document.getElementById('cols').value;
+            document.getElementById('size').innerText = size + ' x ' + size;
+            shulte.size = size;
+        }
     </script>
 </body>
