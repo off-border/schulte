@@ -7,4 +7,4 @@ A Schulte table is a grid with randomly distributed numbers or letters used for 
 
 **Focus on the grid centre and find all the numbers (letters) with your peripheral vision, i.e. without moving your eyes.**
 
-[wiki](https://en.wikipedia.org/wiki/Schulte_table)
+[Wiki](https://en.wikipedia.org/wiki/Schulte_table)
