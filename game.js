@@ -25,6 +25,9 @@ function Shulte(selector){
             this.start();
     }.bind(this) );
 
+    this.createCells();
+    this.smileCells();
+
     window.snap = this.snap;
 
 }
@@ -42,7 +45,7 @@ Shulte.prototype.start = function(){
 }
 
 Shulte.prototype.createCells = function(){
-    snap.clear();
+    this.snap.clear();
     this.cells.splice(0,this.cells.length);
 
     var tmp = [];
@@ -60,7 +63,7 @@ Shulte.prototype.createCells = function(){
 
             let cell = this.snap.rect(0,0,0,0);
             cell.number = this.numbers[ this.size*row + col ];
-            cell.text = snap.text( 0,0, cell.number );
+            cell.text = this.snap.text( 0,0, cell.number );
 
             cell.mousedown( this.cellClicked.bind(this,cell) );
             cell.text.mousedown( this.cellClicked.bind(this,cell) );
@@ -88,7 +91,7 @@ Shulte.prototype.alignCells = function(){
 
             let cell = this.cells[ this.size*row + col ];
 
-            console.log('align cell:', cell.number );
+            //console.log('align cell:', cell.number );
 
             cell.attr({
                 x: x,

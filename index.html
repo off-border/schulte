@@ -41,7 +41,15 @@
             <div class="cell">25</div>
         </div>
 -->
-        <svg class="table"></svg>
+        <div class="table-wrapper">
+            <svg class="table"></svg>
+        </div>
+
+        <div class="settings">
+            <input type="text" value="5">
+            <div class="timer">Time: 00</div>
+            <a class="start" href="javascript:;">start</a>
+        </div>
 
 
 
@@ -50,25 +58,23 @@
 
     <script>
         var shulte = new Shulte('.table');
-        shulte.createCells();
-        shulte.smileCells();
-
 
         window.addEventListener('load', alignTable)
-
         window.addEventListener('resize', alignTable);
 
         function alignTable() {
             let tableEl = document.querySelector('.table');
-            let containerEl = tableEl.parentElement;
-            tableWidth = Math.min(containerEl.getBoundingClientRect().width,
-                window.innerHeight - tableEl.getBoundingClientRect().y * 2);
+            let containerWidth = tableEl.parentElement.getBoundingClientRect().width;
+            let settingsRect = document.querySelector('.settings').getBoundingClientRect();
+
+            let awailWidth = containerWidth;
+
+            tableWidth = Math.min(awailWidth, window.innerHeight) -
+                tableEl.getBoundingClientRect().y * 2;
+
             tableEl.style.width = tableWidth + 'px';
             tableEl.style.height = tableWidth + 'px';
             shulte.alignCells();
         }
-
-
-
     </script>
 </body>
