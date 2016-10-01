@@ -24,7 +24,7 @@ content{
     margin-left: 5%;
 }
 
-svg text {
+.table {
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
