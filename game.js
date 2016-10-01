@@ -39,6 +39,7 @@ Shulte.prototype.start = function(){
     this.nextNumber = 1;
     this.startTime = new Date();
     this.gameStarted && this.gameStarted();
+    clearInterval(this._timer);
     this._timer = setInterval(function(){
         this.time = new Date - this.startTime;
         this.timerTicked && this.timerTicked( this.time );
