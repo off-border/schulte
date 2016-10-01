@@ -11,7 +11,7 @@
 
 <body>
     <content>
-<!--        <h1>Shulte tables brain trainer</h1>-->
+        <!--        <h1>Shulte tables brain trainer</h1>-->
         <!--
         <div class="table">
             <div class="cell"><span>1</span></div>
@@ -41,15 +41,34 @@
             <div class="cell">25</div>
         </div>
 -->
-            <svg class="table"></svg>
+        <svg class="table"></svg>
+
+
 
 
     </content>
 
     <script>
-        var shulte = new Shulte( '.table' );
-
+        var shulte = new Shulte('.table');
         shulte.createCells();
         shulte.smileCells();
+
+
+        window.addEventListener('load', alignTable)
+
+        window.addEventListener('resize', alignTable);
+
+        function alignTable() {
+            let tableEl = document.querySelector('.table');
+            let containerEl = tableEl.parentElement;
+            tableWidth = Math.min(containerEl.getBoundingClientRect().width,
+                window.innerHeight - tableEl.getBoundingClientRect().y * 2);
+            tableEl.style.width = tableWidth + 'px';
+            tableEl.style.height = tableWidth + 'px';
+            shulte.alignCells();
+        }
+
+
+
     </script>
 </body>
