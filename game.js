@@ -10,7 +10,7 @@ function Shulte(selector){
     this.size = 3;
     this.cellPadding = 10;
     this.cellBorderWidth = 2;
-    this.cellBorderColor = '#999';
+    this.cellBorderColor = '#aaa';
     this.cellBorderRadius = 10;
     this.cellBgColor  = 'white';
     this.cellClickedColor = '#9ef09e';
