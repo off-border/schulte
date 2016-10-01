@@ -73,24 +73,26 @@
             let settingsEl = document.querySelector('.settings');
             let settingsRect = settingsEl.getBoundingClientRect();
             let winWidth =  window.innerWidth;
-            let winHeight = window.innerHeight
+            let winHeight = window.innerHeight;
+
 
 
             tableWidth = Math.min(winWidth, winHeight) -
                 tableEl.getBoundingClientRect().y * 2;
 
 
-            if( winWidth/2 + tableWidth/2 > settingsRect.left )
+            if( winWidth/2 + tableWidth/2 > settingsRect.left ){
                 tableEl.parentElement.style.width = settingsRect.left + 'px';
+                if( tableWidth > settingsRect.left - tableEl.getBoundingClientRect().y * 2 )
+                    tableWidth = settingsRect.left - tableEl.getBoundingClientRect().y * 2;
+            }
             else
                 tableEl.parentElement.style.width = '';
 
             tableEl.style.width = tableWidth + 'px';
             tableEl.style.height = tableWidth + 'px';
 
-
             settingsEl.style.top = winHeight/2 - settingsRect.height / 2 + 'px';
-
 
 
             shulte.alignCells();
