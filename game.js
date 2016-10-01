@@ -33,8 +33,14 @@ function Shulte(selector){
 Shulte.prototype.start = function(){
     console.log('starting new game');
 
-    var shulte = this;
 
+    this.createCells();
+
+
+
+}
+
+Shulte.prototype.createCells = function(){
     snap.clear();
     this.cells.slice(0,this.cells.length-1);
 
@@ -57,8 +63,6 @@ Shulte.prototype.start = function(){
         this.numbers.push( tmp.splice( index, 1 )[0] );
     }
     this.nextNumber = 1;
-
-
 
     for( let row = 0; row < this.size; row++ ){
         for( let col = 0; col < this.size; col++ ){
@@ -94,9 +98,6 @@ Shulte.prototype.start = function(){
         }
     }
 
-
-
-
 }
 
 Shulte.prototype.cellClicked = function( cell ){
@@ -117,6 +118,7 @@ Shulte.prototype.cellClicked = function( cell ){
 
     }
 }
+
 
 Shulte.prototype.smileCells = function(){
     for( let cell of this.cells ){
