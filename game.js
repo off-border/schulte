@@ -20,7 +20,6 @@ function Shulte(selector){
     this.nextNumber = 1;
 
     this.snap.click(function(){
-        console.log('snapm mouseup');
         if( this.nextNumber && this.nextNumber === -1 )
             this.start();
     }.bind(this) );
@@ -36,12 +35,22 @@ function Shulte(selector){
 Shulte.prototype.start = function(){
     console.log('starting new game');
 
-
     this.createCells();
+    this.nextNumber = 1;
+    this.startTime = new Date();
+    this.gameStarted && this.gameStarted();
+    this._timer = setInterval(function(){
+        this.time = new Date - this.startTime;
+        this.timerTicked && this.timerTicked( this.time );
+    }.bind(this), 100);
+}
 
-
-
-
+Shulte.prototype.stop = function(){
+    this.smileCells();
+    this.stopTime = new Date();
+    this.time = this.stopTime - this.startTime;
+    this.gameStopped && this.gameStopped();
+    clearInterval(this._timer);
 }
 
 Shulte.prototype.createCells = function(){
@@ -56,25 +65,18 @@ Shulte.prototype.createCells = function(){
         let index = Math.floor(Math.random()*tmp.length)
         this.numbers.push( tmp.splice( index, 1 )[0] );
     }
-    this.nextNumber = 1;
 
     for( let row = 0; row < this.size; row++ ){
         for( let col = 0; col < this.size; col++ ){
-
             let cell = this.snap.rect(0,0,0,0);
             cell.number = this.numbers[ this.size*row + col ];
             cell.text = this.snap.text( 0,0, cell.number );
-
-            cell.mousedown( this.cellClicked.bind(this,cell) );
-            cell.text.mousedown( this.cellClicked.bind(this,cell) );
-
+            cell.mousedown( this._cellClicked.bind(this,cell) );
+            cell.text.mousedown( this._cellClicked.bind(this,cell) );
             this.cells.push(cell);
-
         }
     }
-
     this.alignCells();
-
 }
 
 Shulte.prototype.alignCells = function(){
@@ -90,8 +92,6 @@ Shulte.prototype.alignCells = function(){
             let y = ( cellWidth + this.cellPadding ) * row + this.cellPadding;
 
             let cell = this.cells[ this.size*row + col ];
-
-            //console.log('align cell:', cell.number );
 
             cell.attr({
                 x: x,
@@ -114,10 +114,9 @@ Shulte.prototype.alignCells = function(){
             });
         }
     }
-
 }
 
-Shulte.prototype.cellClicked = function( cell ){
+Shulte.prototype._cellClicked = function( cell ){
     if( cell.number !== this.nextNumber )
         return;
     cell.attr({
@@ -127,13 +126,19 @@ Shulte.prototype.cellClicked = function( cell ){
         fill: this.cellBgColor
     }, 500 );
 
-    this.nextNumber++;
 
+    this.cellClicked && this.cellClicked(this.nextNumber);
+
+    this.nextNumber++;
     if( this.nextNumber > this.size*this.size ){
         console.log('---DONE---')
+        clearInterval( this._timer );
         this.smileCells();
-
+        this.gameFinished && this.gameFinished();
+        return;
     }
+
+
 }
 
 

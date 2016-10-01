@@ -48,7 +48,9 @@
         <div class="settings">
             <input type="text" id="cols" value="5" onchange="shulte.size = this.value; shulte.createCells(); shulte.smileCells();">
             <a class="start" href="javascript:;" onclick="shulte.start();">start</a>
-            <div class="timer">Time: 00</div>
+            <a class="stop hidden" href="javascript:;" onclick="shulte.stop();">stop</a>
+            <div class="timer">Time: <span>00</span></div>
+            <div class="next-number">Next: <span>00</span></div>
 <!--            <div class="next">Next: 1</div>-->
         </div>
 
@@ -59,9 +61,33 @@
 
     <script>
         var shulte = new Shulte('.table');
+        var timerEl = document.querySelector('.timer span');
+        var nextEl = document.querySelector('.next-number span');
+
+        shulte.timerTicked = function(time){
+            let f = Math.floor(time%1000/100);
+            let d = Math.floor(time/1000);
+            timerEl.innerText = d + '.' + f;
+        }
+        shulte.gameStarted = function(){
+            nextEl.innerText = 1;
+            document.querySelector('.start').classList.add('hidden');
+            document.querySelector('.stop').classList.remove('hidden');
+        }
+        shulte.gameStopped = function(){
+            document.querySelector('.start').classList.remove('hidden');
+            document.querySelector('.stop').classList.add('hidden');
+        }
+        shulte.gameFinished = function(){
+            shulte.gameStopped();
+        }
+
+        shulte.cellClicked = function(number){
+            if( number < shulte.numbers.length )
+                nextEl.innerText = number+1;
+        }
 
         window.addEventListener('load', function(){
-
             shulte.size = document.getElementById('cols').value;
             shulte.createCells();
             shulte.smileCells();
@@ -76,11 +102,8 @@
             let winWidth =  window.innerWidth;
             let winHeight = window.innerHeight;
 
-
-
             tableWidth = Math.min(winWidth, winHeight) -
                 tableEl.getBoundingClientRect().y * 2;
-
 
             if( winWidth/2 + tableWidth/2 > settingsRect.left ){
                 tableEl.parentElement.style.width = settingsRect.left + 'px';
@@ -92,12 +115,10 @@
 
             tableEl.style.width = tableWidth + 'px';
             tableEl.style.height = tableWidth + 'px';
-
             settingsEl.style.top = winHeight/2 - settingsRect.height / 2 + 'px';
-
-
             shulte.alignCells();
-
         }
+
+
     </script>
 </body>

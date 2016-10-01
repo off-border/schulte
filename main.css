@@ -10,7 +10,9 @@ content{
     height: 100%;
 }
 
-
+.hidden {
+    display: none !important;
+}
 
 .table{
     display:block;
@@ -61,14 +63,7 @@ svg text::selection {
     color: gray;
 }
 
-.settings .timer {
-    font-size: 180%;
-    margin-top: 10px;
-    padding-left: 20px;
-
-}
-
-.settings .start {
+.settings .start, .settings .stop {
     display: block;
     margin: auto;
     margin-top: 10px;
@@ -89,4 +84,29 @@ svg text::selection {
 
 .settings .start:active{
     color: #dd9797;
+}
+
+.settings .stop {
+    background-color: #6492ba;
+}
+
+.settings .stop:hover {
+    background-color: #70a0cb;
+}
+
+.settings .timer, .settings .next-number {
+    font-size: 180%;
+    margin-top: 10px;
+    padding-left: 20px;
+
+}
+
+.settings .timer span {
+    font-size: 120%;
+}
+
+.settings .next-number span{
+    color: #be7373;
+/*    font-weight: bold;*/
+    font-size: 120%
 }
