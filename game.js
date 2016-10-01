@@ -10,11 +10,11 @@ function Shulte(selector){
     this.size = 3;
     this.cellPadding = 10;
     this.cellBorderWidth = 2;
-    this.cellBorderColor = 'silver';
+    this.cellBorderColor = '#999';
     this.cellBorderRadius = 10;
     this.cellBgColor  = 'white';
     this.cellClickedColor = '#9ef09e';
-    this.cellFontColor = '#717171';
+    this.cellFontColor = '#555';
 
     this.cells = [];
     this.nextNumber = 1;
