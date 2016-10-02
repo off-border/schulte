@@ -25,6 +25,7 @@
         <div class="settings">
             <div id="size">2x2</div>
             <input type="range" step="1" min="2" max="15" id="cols" value="5" oninput="updateSize()" onchange="shulte.createCells(); shulte.smileCells();">
+            <input type="range" step="1" min="1" max="20" id="margin" value="5" oninput="updateMargin()" onchange="updateMargin()">
             <a class="start" href="javascript:;" onclick="shulte.start();">start</a>
             <a class="stop hidden" href="javascript:;" onclick="shulte.stop();">stop</a>
             <div class="timer">Time: <span>00</span></div>
@@ -67,12 +68,17 @@
 
         window.addEventListener('load', function () {
             document.getElementById('cols').value = localStorage.cols || 5;
+            document.getElementById('margin').value = localStorage.tableMargin || 2;
+            updateMargin();
             updateSize();
             shulte.createCells();
             shulte.smileCells();
             alignTable();
         })
-        window.addEventListener('resize', alignTable);
+        window.addEventListener('resize', function(){
+            updateMargin();
+            alignTable();
+        });
 
         function alignTable() {
             let tableEl = document.querySelector('.table');
@@ -102,6 +108,13 @@
             document.getElementById('size').innerText = size + ' x ' + size;
             shulte.size = size;
             localStorage.cols = size;
+        }
+
+        function updateMargin(){
+            var margin = document.getElementById('margin').value;
+            document.querySelector('.table').style.marginTop = margin + '%';
+            alignTable();
+            localStorage.tableMargin = margin;
         }
     </script>
 
